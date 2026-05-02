@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عيد ميلاد حبيبة قلبي ❤️</title>
+
+<style>
+    
+body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #1a001a, #330033, #000);
+    overflow: hidden;
+}
+
+/* ❤️ القلوب */
+#hearts {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    color: #ff4d6d;
+    opacity: 0.6;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(110vh); }
+}
+
+/* 🃏 الكروت */
+#cards {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(3, 130px);
+    gap: 25px;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.card {
+    width: 130px;
+    height: 170px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s ease;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card:hover .inner {
+    transform: translateY(-5px);
+}
+
+.card.flipped .inner {
+    transform: rotateY(180deg);
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    text-align: center;
+    padding: 15px;
+}
+
+/* 💎 الوجه الأمامي */
+.front {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(255, 77, 109, 0.2);
+    font-size: 2rem;
+    color: #ff4d6d;
+}
+
+/* 💌 الخلف */
+.back {
+    background: rgba(255, 255, 255, 0.9);
+    color: #ff4d6d;
+    transform: rotateY(180deg);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+}
+
+/* ✨ فرقعة */
+.pop {
+    position: absolute;
+    color: #ff4d6d;
+    animation: pop 1s forwards;
+}
+
+@keyframes pop {
+    to {
+        transform: translateY(-80px);
+        opacity: 0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="hearts"></div>
+
+<div id="cards"></div>
+
+<script>
+
+/* ❤️ القلوب */
+function createRow() {
+    let cols = 12;
+    let space = window.innerWidth / cols;
+
+    for (let i = 0; i < cols; i++) {
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "❤";
+
+        h.style.left = (i * space + space/2) + "px";
+        h.style.animationDuration = (Math.random()*2+4)+"s";
+
+        document.getElementById("hearts").appendChild(h);
+        setTimeout(()=>h.remove(),6000);
+    }
+}
+setInterval(createRow, 800);
+
+/* 💌 الرسائل */
+const messages = [
+"انهار... 💖",
+"كل سنه وانتي طيبه يا أجمل حاجة في حياتي ✨",
+"كل سنه و انتي ضحكتك محليه يومي كله ❤️",
+"كل سنه و انتي ماليه عليا حياتي يا حبيبة حياتي  💕",
+"أنا محظوظ بيكي يا حبيبة عمري يا كل ما املك و اغلى ما املك  💫",
+"بحبك  يا انهار بحبك يا دكتورة قلبي بحبك يا عمري  💖"
+];
+
+const cardsContainer = document.getElementById("cards");
+
+messages.forEach((msg, i) => {
+
+    let card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+        <div class="inner">
+            <div class="front">❤</div>
+            <div class="back">${msg}</div>
+        </div>
+    `;
+
+    card.onclick = (e) => {
+        card.classList.toggle("flipped");
+
+        // 💥 فرقعة قلوب
+        for(let i=0;i<6;i++){
+            let pop = document.createElement("div");
+            pop.className = "pop";
+            pop.innerHTML = "❤";
+
+            pop.style.left = e.clientX + "px";
+            pop.style.top = e.clientY + "px";
+
+            document.body.appendChild(pop);
+            setTimeout(()=>pop.remove(),1000);
+        }
+    };
+
+    cardsContainer.appendChild(card);
+});
+
+</script>
+
+</body>
+</html>
